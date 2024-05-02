@@ -34,13 +34,10 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseString := string(responseData)
 	if len(responseString) > 0 {
-		url := "http://localhost:8080/"
 		key := RandString(8)
 		storage[key] = responseString
-		returnUrl := url + key
-
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(returnUrl))
+		w.Write([]byte("http://localhost:8080/" + key))
 
 		return
 	}
