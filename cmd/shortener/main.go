@@ -17,8 +17,7 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 
 		url := storage[paramsArray[1]]
 		if len(url) > 0 {
-			w.WriteHeader(http.StatusTemporaryRedirect)
-			w.Write([]byte(url))
+			http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 		} else {
 			http.Error(w, "Not found", http.StatusNotFound)
 		}
@@ -72,7 +71,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc(`/`, RouteHandler)
 
-	err := http.ListenAndServe(`:8080`, mux)
+	err := http.ListenAndServe(`:8090`, mux)
 	if err != nil {
 		panic(err)
 	}
